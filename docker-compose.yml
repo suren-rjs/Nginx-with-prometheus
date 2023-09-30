@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+    client:
+      build:
+          context: .
+          dockerfile: Dockerfile
+      ports:
+          - 8000:80
+      volumes:
+          - ./src:/usr/share/nginx/html
+          - ./config/nginx.conf:/etc/nginx/conf.d/nginx.conf
+      labels:
+        - "prometheus.port=8081"
+
+    prometheus:
+      image: prom/prometheus
+      ports:
+        - 9090:9090
+      volumes:
+        - ./config/prometheus.yml:/etc/prometheus/prometheus.yml 
